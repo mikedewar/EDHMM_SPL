@@ -1,0 +1,115 @@
+Our aim is to estimate the conditional posterior distribution of the latent states ($\mathcal{X}$ and $\mathcal{D}$) and parameters ($\theta, \lambda$ and $A$) given observations $\mathcal{Y}$ by samples drawn via Markov chain Monte Carlo. Sampling $\theta$ and $A$ given $\mathcal{X}$ proceeds per usual textbook approaches \cite{Bishop06}.  Sampling $\lambda$ given $\mathcal{D}$ is straightforward in most situations.  Gibbs sampling  $\mathcal{X}$ is possible but, for reasons similar to those in the case of graphical models with chain dependency structure, one would not expect Gibbs sampling to work well for this model.  The main contribution of this paper is to show how to generate exact conditional samples of  $\mathcal{X}$ and $\mathcal{D}$ efficiently given all other random variables.
+
+\subsection{Forward Filtering, Backward Sampling}
+
+We can, in theory, use the forward messages from the forward backward algorithm \cite{Rabiner89} to sample the conditional posterior distribution of $\mathcal{X}$ and $\mathcal{D}.$   To do this we treat each state-duration tuple as a single random variable 
+%(i.e.~$z_t = \{x_t,d_t\}$).  
+(introducing the notation $z_t = \{x_t,d_t\}$).  
+Doing so recovers the standard hidden Markov model structure and hence standard forward messages can be used directly.  A forward filtering, backward sampler for $\mathcal{Z} = \{z_1, \ldots, x_T\}$ conditioned on 
+%everything else 
+all other random variables
+requires the classical forward messages:
+    \begin{equation}
+        \alpha_t(z_t) = 
+        \sum_{z_{t-1}}
+        p(z_t | z_{t-1}) 
+        p(y_t|z_t) 
+        \alpha_t(z_{t-1}) 
+        \label{eqn:forward recursion}
+    \end{equation}
+   % \begin{equation}
+   % \beta(z_t) = \sum_{z_{t+1}} p(z_{t+1} | z_t) p(y_{t+1}|z_{t+1}) \beta_{t+1}(z_{t+1})
+   % \label{eqn:backward recursion}
+    % \end{equation}
+     where the transition probability can be factorised according to our modelling assumptions:
+     \begin{equation}
+        p(z_{t} | z_{t-1}) = p(x_t | x_{t-1}, d_{t-1}) p(d_t | d_{t-1}, x_t) p(y_t|x_t).
+     \end{equation}
+
+Unfortunately the sum in \eqref{eqn:forward recursion} has an infinite number of terms in the usual case of  duration distributions with countably infinite support. The standard approach to EDHMM inference involves truncating these sums in order to make them tractable. 
+%If all durations are truncated at a maximum $d_\mathrm{max}$, yet many states are of duration far less than $d_{\mathrm{max}}$, this necessarily leads to much unnecessary computation
+% if not all states have durations near $d_\mathrm{max}$. 
+A reasonable computational artifice is to truncate all durations at some maximum $d_\mathrm{max}$; however, this leads to tremendous unneccesary computation for those states of duration much less than the chosen maximum.
+In general, setting allowable duration intervals $d_\mathrm{min}<d<d_\mathrm{max}$
+is highly problematic; moreover, poor choices can lead to poor inference. 
+
+%The complexity of the standard approach is always $O(T(Kd_\mathrm{max})^2)$ which is highly inefficient for segments of activity that are always long. The beam sampler below is only constrained by the effective support of the duration distribution, and hence can deal with extremely long durations with no penalty. The worst-case complexity of the beam-sampler would be achieved with a uniform duration distribution with support over $[1, d_\mathrm{max}]$. 
+
+\subsection{EDHMM Beam Sampling}
+
+A recent contribution to inference 
+in 
+%is 
+the infinite Hidden Markov Model (iHMM) \cite{Beal2002} suggests a way around truncation \cite{vanGael2008}.  The iHMM is an HMM with a countable number of states.  Computing the forward message for a forward filtering, backward sampler for the latent states in an iHMM also requires a sum over a countable number of elements.  
+% which can be dealt with using the beam sampler \cite{vanGael2008}. Here, instead of a %potentially infinite duration-space cardinality, the iHMM faces a potentially infinite state cardinality. 
+%The beam sampler combines dynamic programming with slice sampling \cite{Neal2003} in order to sample from the hierarchical Dirichlet process inherent to the iHMM.
+The ``beam sampling'' approach  \cite{vanGael2008}, which we can apply largely without modification, is to truncate this sum by introducing a ``slice''  (see \cite{Neal2003}) auxiliary variable $\mathcal{U} = \{u_1, u_2, \ldots,u_T\}$ at each time step.  The auxiliary variables are chosen in such a way as to automatically limit each sum in the forward pass to a finite number of terms while allowing inference to remain exact.% in the asymptotic sampling limit.  
+
+%which is used in a Gibbs sampling scheme to allow sampling from the true posterior state transition distribution.
+%In the context of the EDHMM, the beam sampler allows us to sample directly from the invariant posterior $p(\mathcal{X},\mathcal{D},\mathcal{U} | \mathcal{Y})$ using standard Gibbs sampling theory. Using a block-Gibbs sampling scheme, $\mathcal{U}$ is sampled so that we are able to sample from $p(\mathcal{X},\mathcal{D} | \mathcal{U}, \mathcal{Y})$ and $p(\mathcal{U} | \mathcal{X},\mathcal{D})$. Upon convergence of the Markov chain, by simply marginalising $\mathcal{U}$ the remaining samples of state and duration are drawn directly from the posterior, without any need to choose a maximum duration. 
+
+The particular choice of auxiliary variable $u_t$ is important.  We follow  \cite{vanGael2008} in choosing $u_t$ to be conditionally distributed given the current and previous state and duration in the following way (see the graphical model in Figure \ref{fig:aux graphical model}):
+\begin{equation}
+    \label{eqn:slice}
+    p(u_t | z_t, z_{t-1}) = 
+    \frac
+    {\mathbb{I}(0 < u_t < p(z_t | z_{t-1}))} 
+    {p(z_t | z_{t-1})}.
+\end{equation}
+Given $\mathcal{U}$ it possible to sample the state $\mathcal{X}$ and duration $\mathcal{D}$ conditional posterior. 
+%\begin{equation}
+%    \hat{\alpha}_t(z_t) = p(z_t, d_t , \mathcal{Y}_1^t, \mathcal{U}_1^t)
+%\end{equation}
+Using notation $\mathcal{Y}_{t_1}^{t_2} = \{y_{t_1}, y_{t_1+1}, \ldots,y_{t_2}\}$  to indicate sub-ranges of a sequence, the new forward messages we compute are:
+\begin{eqnarray}
+   \hat{\alpha}_t(z_t) &=& 
+   p(z_t, \mathcal{Y}_1^t , \mathcal{U}_1^{t-1})   \label{eqn:scaled forward} \\
+   &=& 
+   \sum_{z_{t-1}}
+   p(z_t, z_{t-1} , \mathcal{Y}_1^t , \mathcal{U}_1^{t-1}) \nonumber \\
+   &\propto& 
+   \sum_{z_{t-1}}
+   p(u_{t-1} | z_t, z_{t-1})
+   p(z_t, z_{t-1} , \mathcal{Y}_1^t, \mathcal{U}_1^{t-1}) \nonumber \\
+   &=& 
+   \sum_{z_{t-1}}
+   \mathbb{I}(0 < u_{t-1} < p(z_t | z_{t-1}))
+   p(y_t|z_t) \hat{\alpha}_{t-1}(z_{t-1}) \nonumber.
+\end{eqnarray}
+The indicator function results in non-zero probabilities in the forward message for only those states $z_t$ whose likelihood given $z_{t-1}$ is greater than $u_t$. The set of $z_t$'s for which this is true will always be finite. %\mike{PROVE THIS OR ADD A SENTENCE}
+%Hence \eqref{eqn:indicator} can be rewritten as a limitation of the sum over possible state transitions:
+%\begin{equation}
+%    \hat{\alpha}_t(z_t) = 
+%    \begin{cases} 
+%            p(y_t|z_t)\sum_{z_{t-1}}\hat{\alpha}_{t-1}(z_{t-1}) & \textrm{if $u_t < p(z_t | z_{t-1})$} \\
+%            0 & \textrm{otherwise}
+%        \end{cases}    
+%    \label{eqn:scaled forward}
+%\end{equation}
+%which has restricted the calculation to a finite set. 
+%Care must be taken to find those transitions $p(z_t | z_{t-1})$ whose likelihood is greater than the auxiliary variable $u_t$, though this is a straightforward task for unimodal distributions.
+
+%The auxiliary variable encodes all of the information we have about the probability of making a transition: most of the time the only valid transition will be to decrement $d_t$ and to stay in the same state. At the end of a segment the potential transitions will be filtered using the auxiliary variable, discarding unlikely transitions. The actual transition will be chosen from the remaining set, depending on the observation likelihood associated with each transition. The slightly un-intuitive aspect of this is that once this filtering has taken place, the transition probabilities are no longer used in the determination of the transition, unlike in standard forward-backward algorithms.
+
+The backwards sampling step recursively samples a state sequence from the distribution $p(z_t | z_{t+1}, \mathcal{Y}, \mathcal{U})$
+%\begin{equation}
+%    p(z_t | z_{t+1}, \mathcal{Y}, \mathcal{U}).
+%\end{equation}
+which can expressed in terms of the forward variable:
+\begin{eqnarray}
+    p(z_t | z_{t+1}, \mathcal{Y}, \mathcal{U}) &\propto& p(z_{t+1},z_t, \mathcal{Y}, \mathcal{U}) \nonumber \\
+    & \propto &  
+        p(u_{t} | z_t, z_{t+1})p(z_{t+1}|z_t) \hat{\alpha}_t(z_t)
+        %p(z_t, \mathcal{Y}_1^t, \mathcal{U}_1^t)
+        %p(\mathcal{Y}_{t+1}^T, \mathcal{U}_{t+2}^T | z_{t+1}) 
+        \nonumber\\
+    & \propto & 
+       \mathbb{I}(0 < u_{t} < p(z_{t+1} | z_t))
+        \hat{\alpha}_t(z_t).
+        \label{eqn:backward}
+\end{eqnarray}
+
+%Note that the indicator function used in the backwards sampler further restricts possible transitions. This restriction is conditional on the sampled $z_{t+1}$, limiting the transitions selected by in the forwards to those that could possibly result in $z_{t+1}$.
+
+The full EDHMM beam sampler is given in Algorithm \ref{alg:beam}, which makes use of the forward recursion in \eqref{eqn:scaled forward}, the slice sampler in \eqref{eqn:slice}, and the backwards sampler in \eqref{eqn:backward}.
+

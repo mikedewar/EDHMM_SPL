@@ -1,0 +1,29 @@
+The EDHMM captures the relationships among state $x_t$, duration $d_t$, and  observation $y_t$ over time $t$. It consists of four components: the initial state distribution, the transition distributions, the observation distributions, and the duration distributions. 
+
+We define the observation sequence $\mathcal{Y} = \{y_1, y_2, \ldots, y_T\}$; the latent state sequence $\mathcal{X} = \{x_0, x_1, x_2, \ldots, x_T\}$; and the remaining time in each segment $\mathcal{D} = \{ d_1, d_2, \ldots, d_T\}$, where $x_t \in \{ 1, 2, \ldots, K\}$ with $K$ the maximum number of states, $d_t \in \{1, 2, \ldots \}$, and $y_t \in \mathbb{R}^n$.     We assume that the Markov chain on the latent states is homogenous, i.e., that $p(x_t = i | x_{t-1}=j, A) = a_{i,j} \forall t$ where $A$ is a $K\times K$ matrix with element $a_{i,j}$ at row $i$ and column $j.$  The prior on $A$ is row-wise Dirichlet with zero prior mass on self-transitions, i.e.  $p(a_{i,:}) = \mathrm{Dir}({1}/{K-1}, \ldots, 0 , \ldots {1}/{K-1})$ where $a_{i,:}$ is a row vector and the $i$th Dirichlet parameter is $0.$  Each state is imbued with its own duration distribution $p(d_t | x_t = k) = p(d_t | \lambda_{k})$ with parameter $\lambda_k$.  Each duration distribution parameter is drawn from a prior $p(\lambda_k)$ which can be chosen in an application specific way.  The collection of all duration distribution parameters is $\lambda = \{\lambda_1, \ldots, \lambda_K\}$.  Each state is also imbued with an observation generating distribution $p(y_t  | x_t = k) = p(y_t | \theta_{k})$ with parameter $\theta_k$.  Each observation distribution parameter is 
+%given 
+drawn from a prior $p(\theta_k)$ also to be chosen according to the application.   The set of all observation distribution parameters is $\theta.$  In the following exposition, explicit conditional dependencies on component distribution parameters are omitted to focus on the particulars unique to the EDHMM.
+
+In an EDHMM the transitions between states are only allowed at the end of a segment:
+    \begin{equation}
+        p(x_t | x_{t-1}, d_{t-1}) = 
+        \begin{cases} 
+            \delta(x_t, x_{t-1}) & \textrm{if $d_{t-1} > 1$} \\
+            p(x_t | x_{t-1}) & \textrm{otherwise}
+        \end{cases}
+    \end{equation}
+where the Kronecker delta $\delta(a,b) = 1$ if $a=b$ and zero otherwise. The duration distribution generates segment lengths at every state switch:
+    \begin{equation}
+        p(d_t | x_{t}, d_{t-1}) = 
+        \begin{cases} 
+            \delta(d_t, d_{t-1}-1) & \textrm{if $d_{t-1} > 1$} \\
+            p(d_t | x_{t}) & \textrm{otherwise.}
+        \end{cases}
+    \end{equation}
+The joint distribution of the EDHMM is 
+\begin{multline}
+    \label{eq:joint}
+    p(\mathcal{X},\mathcal{D},\mathcal{Y}) =  \\ 
+    p(x_0)p(d_0)\prod_{t=1}^T p(y_t | x_t, \theta) p(x_t | x_{t-1}, d_{t-1}, A) p(d_t | x_{t}, d_{t-1}, \lambda)
+\end{multline}
+corresponding to the graphical model in Figure \ref{fig:graphical model}. Alternative choices to define the duration variable $d_t$ exist; see \cite{Chiappa2011} for details. Algorithm \ref{alg:gen} illustrates the EDHMM as a generative model.

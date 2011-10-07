@@ -1,0 +1,6 @@
+We presented a beam sampler for the explicit state duration HMM. This sampler draws state sequences from the true posterior distribution without any need to make truncation approximations.
+% introduction of an auxiliary variable sampling technique stochastically limits the possible transitions to a finite set, whose size is governed by the effective support of the duration distribution. Hence the computational complexity of the algorithm is governed by the support of the duration distribution instead of the magnitude of the duration itself.  
+It remains future work to combine the explicit state duration HMM and the iHMM.
+Python code associated with the EDHMM is available online.\footnote{http://github.com/mikedewar/EDHMM}
+
+%Though it has not been the focus of this paper, the sampling technique could be readily extended to an infinite variant of the EDHMM, combining an infinite state representation with the infinite duration representation presented above. For more complex behaviours, the beam sampler could be applied to the SLDS to capture long behaviours without suffering a computational penalty.

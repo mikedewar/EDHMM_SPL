@@ -1,0 +1,51 @@
+\begin{figure*}[ttt!]
+\begin{minipage}[t]{2in}
+\begin{algorithm}[H]
+    \caption{Generate Data}
+    \label{alg:gen}
+    \begin{algorithmic}
+        \STATE sample $x_0 \sim p(x_0)$
+        \STATE sample $d_0 \sim p(d_0)$
+        \FOR {$t = 1, 2, \ldots, T$}
+            \IF{$d_{t-1} = 1$}
+                \STATE a new segment starts:
+                \STATE sample $x_t \sim p(x_t | x_{t-1})$
+                \STATE sample $d_t \sim p(d_t | x_t)$
+            \ELSE
+                \STATE the segment continues:
+                \STATE $x_t = x_{t-1}$
+                \STATE $d_t = d_{t-1} - 1$
+            \ENDIF
+        \STATE sample $y_t \sim p(y_t | x_t)$
+        \ENDFOR
+    \end{algorithmic}
+\end{algorithm} 
+ \end{minipage}
+ \hfill
+ \begin{minipage}[t]{3.3in}
+\begin{algorithm}[H]
+    \caption{Sample the EDHMM}
+    \label{alg:beam}
+    \begin{algorithmic}
+%\STATE \textbf{Initialise:}
+\STATE Initialise parameters $A$, $\lambda$, $\theta.$ Initialize $u_t$ small $\forall\, T$
+%\STATE set $\mathcal{U}$ to a small value for all $u_t \in \mathcal{U}$
+\FOR{sweep $ \in \{1,2,3,\ldots \}$}
+   % \STATE \textbf{Forwards pass}:
+    \STATE \textbf{Forward}: run \eqref{eqn:scaled forward} to get $\hat{\alpha}_t$ given $\mathcal{U}$ and $\mathcal{Y} \; \forall\, T$
+    %\STATE \textbf{Backwards sample}:
+    \STATE \textbf{Backward}: sample $z_T \sim \hat{\alpha}_T$
+    \FOR{$t \in \{T, T-1, \ldots, 1\}$}
+        \STATE sample $z_{t-1} \sim \mathbb{I}(u_{t+1} < p(z_{t} | z_{t-1}))\hat{\alpha}_{t-1}$
+    \ENDFOR
+\STATE \textbf{Slice:}\FOR {$t \in \{1, 2, \ldots, T \}$}
+    \STATE evaluate $l = p(d_t|x_t,d_{t-1})p(x_t|x_{t-1},d_{t-1})$
+    \STATE sample $u_{t+1} \sim \mathrm{Uniform}(0,l)$
+    \ENDFOR
+\STATE sample parameters $A$, $\lambda$, $\theta$
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}
+ \hfill
+\end{figure*}

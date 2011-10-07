@@ -1,0 +1,78 @@
+\documentclass[journal]{oldtran/IEEEtran}
+\usepackage{amsmath,amssymb,graphicx,subfig}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{algorithm,algorithmic}
+\newcommand{\mike}[1]{\textcolor{red}{\textsf{\emph{\textbf{\textcolor{red}{#1}}}}}}
+\newcommand{\frank}[1]{\textcolor{red}{\textsf{\emph{\textbf{\textcolor{blue}{#1}}}}}}
+\newcommand{\simeon}[1]{\textcolor{red}{\textsf{\emph{\textbf{\textcolor{green}{#1}}}}}}
+\newcommand{\E}{\textrm{E}}
+
+\title{Inference in Hidden Markov Models with Explicit State Duration Distributions}
+\author{\mike{Mike}, Chris, \frank{Frank}}
+
+\begin{document}
+    
+\maketitle
+
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+\section{Introduction}
+
+\input{introduction}
+
+    \begin{figure}[t]
+        \centering
+        \subfloat[][]{
+            \includegraphics[width=0.25\textwidth]{EDHMM_graphical_model.pdf}
+            \label{fig:graphical model}
+        }
+        \subfloat[][]{
+            \includegraphics[width=0.25\textwidth]{EDHMM_aux_graphical_model.pdf}
+         \label{fig:aux graphical model}
+        }
+        \caption{a) The Explicit Duration Hidden Markov Model. The time left in the current state $x_t$ is denoted $d_t$. The observation at each point in time is denoted $y_t$. b) The EDHMM with the additional auxiliary variable $u_t$ used in the beam sampler.}
+    \label{fig:graphs}    
+    \end{figure}
+\section{Explicit Duration Hidden Markov Model}
+\label{sec:Model}
+
+\input{model}
+
+\input{algorithm}
+
+\section{EDHMM Inference}
+
+\label{sec:inference}
+
+\input{sampling}
+
+
+\subsection{Related Work}
+
+The need to accommodate explicit state duration distributions in HMMs has long been recognised. Rabiner \cite{Rabiner89} details the basic approach which expands the state space to include dwell time before applying a slightly modified Baum-Welch algorithm. This approach specifies a maximum state duration, limiting practical application 
+to cases with short sequences and dwell times.
+This approach, generalised under the name ``segmental hidden Markov models'', includes more general transitions than those Rabiner considered, allowing the next state and duration to be conditioned on the previous state and duration \cite{Gales93}. Efficient approximate inference procedures were developed in the context of speech recognition \cite{Ostendorf96} and evolved into symmetric approaches suitable for implementation \emph{in-silico} \cite{Yu2006}.
+
+Recently, a ``sticky'' variant of the hierarchical Dirichlet process HMM (HDP-HMM) has been developed \cite{Fox2008}.  The HDP-HMM has countable state-cardinality \cite{Teh06} allowing estimation of the number of states in the HMM; the sticky aspect addresses long dwell times by introducing a parameter in the prior that favours self-transition. 
+
+
+\section{Experiments}
+
+\label{sec:experiments}
+
+\input{results}
+
+
+\section{Discussion}
+
+\label{sec:dicussion}
+
+\input{discussion}
+
+\bibliographystyle{plain}
+
+\bibliography{library}
+
+\end{document}

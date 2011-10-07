@@ -1,0 +1,10 @@
+\documentclass{article}
+
+\title{Beam Sampling for the Explicit Duration HMM}
+\author{Mike Dewar}
+
+\begin{document}
+    
+    Problem: when sampling from an explicit duration HMM, we have to specify a maximum state duration during the forward backward algorithm, which artificially cuts off the duration distribution.
+    
+    Solution: beam sampling, as introudced by van Gael et al. Introduce an auxilliary variable $u$ such that the number of possible durations of each state is finite. For each $t$, $u_t \sim \mathrm{Uniform}(0,d_{s_t})$ where $d_{s_t}$ is the probability of the duration of the segment in state $s_t$. 
