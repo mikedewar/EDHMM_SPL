@@ -8,6 +8,6 @@ is borrowed from sampling procedures developed for nonparametric  Bayesian HMM v
 
 In this work we show specifically that a ``beam-sampling'' approach  \cite{vanGael2008} works for non-approximate estimation of EDHMMs, learning both the transition structure and duration distributions simultaneously.
 
-In demonstrating our EDHMM inference technique we consider a synthetic system  in which the state-cardinality is known and finite and the distributions over state durations are of scientific interest, we focus on the finite state, unknown duration distribution case. We show that the EDHMM beam sampler performs accurate tracking whilst capturing the duration distributions over the dwell time of each state as well as the probability of transitioning between states.
+In demonstrating our EDHMM inference technique we consider a synthetic system  in which the state-cardinality is known and finite, but where each state's duration distribution is unknown. We show that the EDHMM beam sampler performs accurate tracking whilst capturing the duration distributions as well as the probability of transitioning between states.
 
 The remainder of the letter is organised as follows.  In Section~\ref{sec:Model} we introduce the EDHMM; in Section~\ref{sec:inference} we review beam-sampling for the infinite Hidden Markov Model (iHMM) \cite{Beal2002} and show how it relates to the EDHMM inference problem; and in Section~\ref{sec:experiments} we show results from using the EDHMM to model synthetic data.  

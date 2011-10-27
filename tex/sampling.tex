@@ -29,11 +29,9 @@ requires the classical forward messages:
 Unfortunately the sum in \eqref{eqn:forward recursion} has an infinite number of terms in the usual case of  duration distributions with countably infinite support. The standard approach to EDHMM inference involves truncating these sums in order to make them tractable. 
 %If all durations are truncated at a maximum $d_\mathrm{max}$, yet many states are of duration far less than $d_{\mathrm{max}}$, this necessarily leads to much unnecessary computation
 % if not all states have durations near $d_\mathrm{max}$. 
-A reasonable computational artifice is to truncate all durations at some maximum $d_\mathrm{max}$; however, this leads to tremendous unneccesary computation for those states of duration much less than the chosen maximum.
-In general, setting allowable duration intervals $d_\mathrm{min}<d<d_\mathrm{max}$
-is highly problematic; moreover, poor choices can lead to poor inference. 
+A reasonable computational artifice is to truncate all durations at some maximum $d_\mathrm{max}$, or to consider all possible durations up to the observed length of the sequence. This leads to either tremendous unnecessary computation, or inference that simply fails if an observed duration occurs outside the allowable duration intervals $d_\mathrm{min}<d<d_\mathrm{max}$. 
 
-%The complexity of the standard approach is always $O(T(Kd_\mathrm{max})^2)$ which is highly inefficient for segments of activity that are always long. The beam sampler below is only constrained by the effective support of the duration distribution, and hence can deal with extremely long durations with no penalty. The worst-case complexity of the beam-sampler would be achieved with a uniform duration distribution with support over $[1, d_\mathrm{max}]$. 
+The complexity of the standard approach \cite{Yu10} is always $O(T(Kd_\mathrm{max})^2)$ which is highly inefficient for segments of activity that are always long. The beam sampler below is only constrained by the effective support of the duration distribution, and hence can deal with extremely long durations with no penalty. The worst-case complexity of the beam-sampler would be achieved with a uniform duration distribution with support over $[1, d_\mathrm{max}]$. 
 
 \subsection{EDHMM Beam Sampling}
 
@@ -43,7 +41,7 @@ in
 the infinite Hidden Markov Model (iHMM) \cite{Beal2002} suggests a way around truncation \cite{vanGael2008}.  The iHMM is an HMM with a countable number of states.  Computing the forward message for a forward filtering, backward sampler for the latent states in an iHMM also requires a sum over a countable number of elements.  
 % which can be dealt with using the beam sampler \cite{vanGael2008}. Here, instead of a %potentially infinite duration-space cardinality, the iHMM faces a potentially infinite state cardinality. 
 %The beam sampler combines dynamic programming with slice sampling \cite{Neal2003} in order to sample from the hierarchical Dirichlet process inherent to the iHMM.
-The ``beam sampling'' approach  \cite{vanGael2008}, which we can apply largely without modification, is to truncate this sum by introducing a ``slice''  (see \cite{Neal2003}) auxiliary variable $\mathcal{U} = \{u_1, u_2, \ldots,u_T\}$ at each time step.  The auxiliary variables are chosen in such a way as to automatically limit each sum in the forward pass to a finite number of terms while allowing inference to remain exact.% in the asymptotic sampling limit.  
+The ``beam sampling'' approach  \cite{vanGael2008}, which we can apply largely without modification, is to truncate this sum by introducing a ``slice''  (see \cite{Neal2003}) auxiliary variable $\mathcal{U} = \{u_1, u_2, \ldots,u_T\}$ at each time step.  The auxiliary variables are chosen in such a way as to automatically limit each sum in the forward pass to a finite number of terms while still allowing all possible durations.% in the asymptotic sampling limit.  
 
 %which is used in a Gibbs sampling scheme to allow sampling from the true posterior state transition distribution.
 %In the context of the EDHMM, the beam sampler allows us to sample directly from the invariant posterior $p(\mathcal{X},\mathcal{D},\mathcal{U} | \mathcal{Y})$ using standard Gibbs sampling theory. Using a block-Gibbs sampling scheme, $\mathcal{U}$ is sampled so that we are able to sample from $p(\mathcal{X},\mathcal{D} | \mathcal{U}, \mathcal{Y})$ and $p(\mathcal{U} | \mathcal{X},\mathcal{D})$. Upon convergence of the Markov chain, by simply marginalising $\mathcal{U}$ the remaining samples of state and duration are drawn directly from the posterior, without any need to choose a maximum duration. 
@@ -76,7 +74,7 @@ Using notation $\mathcal{Y}_{t_1}^{t_2} = \{y_{t_1}, y_{t_1+1}, \ldots,y_{t_2}\}
    \mathbb{I}(0 < u_{t-1} < p(z_t | z_{t-1}))
    p(y_t|z_t) \hat{\alpha}_{t-1}(z_{t-1}) \nonumber.
 \end{eqnarray}
-The indicator function results in non-zero probabilities in the forward message for only those states $z_t$ whose likelihood given $z_{t-1}$ is greater than $u_t$. The set of $z_t$'s for which this is true will always be finite. %\mike{PROVE THIS OR ADD A SENTENCE}
+The indicator function results in non-zero probabilities in the forward message for only those states $z_t$ whose likelihood given $z_{t-1}$ is greater than $u_t$. The set of $z_t$s for which this is true will always be finite and smaller than the worst case $(Kd_\mathrm{max})^2$. 
 %Hence \eqref{eqn:indicator} can be rewritten as a limitation of the sum over possible state transitions:
 %\begin{equation}
 %    \hat{\alpha}_t(z_t) = 
