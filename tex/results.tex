@@ -21,7 +21,7 @@
         \includegraphics[width=0.25\textwidth]{../pic/posterior_rates.pdf}
         \label{fig:posterior_rates}
     }
-    \caption{Samples from the posterior distributions of a) the observation distribution means and b) the duration distribution rate parameters using the model described in Figure \ref{fig:exp_1_data}.}
+    \caption{Samples from the posterior distributions of a) the observation distribution means and b) the duration distribution rate parameters for the data shown in Figure \ref{fig:experiment1_data}.}
     \label{fig:experiment1_results}
 \end{figure}
 \subsection{Synthetic Data}
@@ -80,6 +80,6 @@ Finally, Figure \ref{fig:allowed} shows that the number of allowed transitions d
 \begin{figure}
     \includegraphics[width=0.5\textwidth]{../pic/number_transitions_visited.pdf}
 
-\caption{Mean number of transitions visited over the first 1000 iterations of the beam sampler after burn-in. Note that the standard approach would need to examine $((K-1)T)^2 = 10^6$ transitions per time point to achieve similar accuracy.}
+\caption{Mean number of transitions considered per time point by the beam sampler for 1000 post-burn-in iterations on data from Figure \ref{MIKE}. Consider this in comparison to the $(KT)^2 = O(10^6)$ transitions that would need to be considered by standard forward backward without truncation, the only surely safe, truncatation-free alternative.}
 \label{fig:allowed}
 \end{figure}

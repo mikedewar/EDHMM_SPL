@@ -1,4 +1,4 @@
-Our aim is to estimate the conditional posterior distribution of the latent states ($\mathcal{X}$ and $\mathcal{D}$) and parameters ($\theta, \lambda$ and $A$) given observations $\mathcal{Y}$ by samples drawn via Markov chain Monte Carlo. Sampling $\theta$ and $A$ given $\mathcal{X}$ proceeds per usual textbook approaches \cite{Bishop06}.  Sampling $\lambda$ given $\mathcal{D}$ is straightforward in most situations.  Gibbs sampling  $\mathcal{X}$ is possible but, for reasons similar to those in the case of graphical models with chain dependency structure, one would not expect Gibbs sampling to work well for this model.  The main contribution of this paper is to show how to generate exact conditional samples of  $\mathcal{X}$ and $\mathcal{D}$ efficiently given all other random variables.
+Our aim is to estimate the conditional posterior distribution of the latent states ($\mathcal{X}$ and $\mathcal{D}$) and parameters ($\theta, \lambda$ and $A$) given observations $\mathcal{Y}$ by samples drawn via Markov chain Monte Carlo. Sampling $\theta$ and $A$ given $\mathcal{X}$ proceeds per usual textbook approaches \cite{Bishop06}.  Sampling $\lambda$ given $\mathcal{D}$ is straightforward in most situations.  Gibbs sampling  $\mathcal{X}$ is possible but, for reasons similar to those in the case of graphical models with chain dependency structure, one would not expect Gibbs sampling to work well for this model.  The main contribution of this paper is to show how to generate posterior samples of  $\mathcal{X}$ and $\mathcal{D}$ efficiently given all other random variables.
 
 \subsection{Forward Filtering, Backward Sampling}
 
@@ -29,9 +29,10 @@ requires the classical forward messages:
 Unfortunately the sum in \eqref{eqn:forward recursion} has an infinite number of terms in the usual case of  duration distributions with countably infinite support. The standard approach to EDHMM inference involves truncating these sums in order to make them tractable. 
 %If all durations are truncated at a maximum $d_\mathrm{max}$, yet many states are of duration far less than $d_{\mathrm{max}}$, this necessarily leads to much unnecessary computation
 % if not all states have durations near $d_\mathrm{max}$. 
-A reasonable computational artifice is to truncate all durations at some maximum $d_\mathrm{max}$, or to consider all possible durations up to the observed length of the sequence. This leads to either tremendous unnecessary computation, or inference that simply fails if an observed duration occurs outside the allowable duration intervals $d_\mathrm{min}<d<d_\mathrm{max}$. 
+A reasonable computational artifice is to truncate all durations at some maximum $d_\mathrm{max}$, or to consider all possible durations up to the observed length of the sequence. This leads to per sample, forward-backward computational complexity of $O(T(Kd_\mathrm{max})^2)$  and  $O(T(KT)^2)$ respectively.  Alternatively one could risk inference that will simply fail if an actual duration lies outside hard-coded allowable duration intervals $d_\mathrm{min}<d<d_\mathrm{max}$.  This yields $O(T(K(d_\mathrm{max}-d_\mathrm{min}))^2)$ complexity.
+The beam-sampler we propose behaves like a dynamic version of the latter, automatically scaling the allowable per-state duration intervals.   Its use of slice-sampling auxiliary variables results in an asymptotically exact sample with no risk of incorrect inference resulting from incorrectly pre-specified duration bounds.   We do not characterize the computational complexity of the proposed beam sampler in this work but note that it is upper bounded by $O(T(KT)^2)$ (i.e., the beam sampler admits durations of length equal to the entire sequence) but in practice is found to be as  or more efficient than the doubly hard-coded, risky approach.
 
-The complexity of the standard approach \cite{Yu10} is always $O(T(Kd_\mathrm{max})^2)$ which is highly inefficient for segments of activity that are always long. The beam sampler below is only constrained by the effective support of the duration distribution, and hence can deal with extremely long durations with no penalty. The worst-case complexity of the beam-sampler would be achieved with a uniform duration distribution with support over $[1, d_\mathrm{max}]$. 
+%would be achieved with a uniform duration distribution with support over $[1, d_\mathrm{max}]$. 
 
 \subsection{EDHMM Beam Sampling}
 
@@ -74,7 +75,7 @@ Using notation $\mathcal{Y}_{t_1}^{t_2} = \{y_{t_1}, y_{t_1+1}, \ldots,y_{t_2}\}
    \mathbb{I}(0 < u_{t-1} < p(z_t | z_{t-1}))
    p(y_t|z_t) \hat{\alpha}_{t-1}(z_{t-1}) \nonumber.
 \end{eqnarray}
-The indicator function results in non-zero probabilities in the forward message for only those states $z_t$ whose likelihood given $z_{t-1}$ is greater than $u_t$. The set of $z_t$s for which this is true will always be finite and smaller than the worst case $(Kd_\mathrm{max})^2$. 
+The indicator function results in non-zero probabilities in the forward message for only those states $z_t$ whose likelihood given $z_{t-1}$ is greater than $u_t$. The beam sampler derives its computational advantage from the fact that the set of $z_t$'s for which this is true is typically small. 
 %Hence \eqref{eqn:indicator} can be rewritten as a limitation of the sum over possible state transitions:
 %\begin{equation}
 %    \hat{\alpha}_t(z_t) = 
