@@ -4,8 +4,7 @@
     \caption{Generate Data}
     \label{alg:gen}
     \begin{algorithmic}
-        \STATE sample $x_0 \sim p(x_0)$
-        \STATE sample $d_0 \sim p(d_0)$
+        \STATE sample $x_0 \sim p(x_0)$, $d_0 \sim p(d_0)$
         \FOR {$t = 1, 2, \ldots, T$}
             \IF{$d_{t-1} = 1$}
                 \STATE a new segment starts:

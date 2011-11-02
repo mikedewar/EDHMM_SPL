@@ -2,9 +2,6 @@
 \usepackage{amsmath,amssymb,graphicx,subfig}
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{algorithm,algorithmic}
-\newcommand{\mike}[1]{\textcolor{red}{\textsf{\emph{\textbf{\textcolor{red}{#1}}}}}}
-\newcommand{\frank}[1]{\textcolor{red}{\textsf{\emph{\textbf{\textcolor{blue}{#1}}}}}}
-\newcommand{\simeon}[1]{\textcolor{red}{\textsf{\emph{\textbf{\textcolor{green}{#1}}}}}}
 \newcommand{\E}{\textrm{E}}
 
 \title{Inference in Hidden Markov Models with Explicit State Duration Distributions}
@@ -25,11 +22,11 @@
     \begin{figure}[t]
         \centering
         \subfloat[][]{
-            \includegraphics[width=0.25\textwidth]{../pic/EDHMM_graphical_model.pdf}
+            \includegraphics[width=0.2\textwidth]{../pic/EDHMM_graphical_model.pdf}
             \label{fig:graphical model}
         }
         \subfloat[][]{
-            \includegraphics[width=0.25\textwidth]{../pic/EDHMM_aux_graphical_model.pdf}
+            \includegraphics[width=0.2\textwidth]{../pic/EDHMM_aux_graphical_model.pdf}
          \label{fig:aux graphical model}
         }
         \caption{a) The Explicit Duration Hidden Markov Model. The time left in the current state $x_t$ is denoted $d_t$. The observation at each point in time is denoted $y_t$. b) The EDHMM with the additional auxiliary variable $u_t$ used in the beam sampler.}
