@@ -55,7 +55,7 @@
 
 The need to accommodate explicit state duration distributions in HMMs has long been recognised. Rabiner \cite{Rabiner89} details the basic approach which expands the state space to include dwell time before applying a slightly modified Baum-Welch algorithm. This approach specifies a maximum state duration, limiting practical application 
 to cases with short sequences and dwell times.
-This approach, generalised under the name ``segmental hidden Markov models'', includes more general transitions than those Rabiner considered, allowing the next state and duration to be conditioned on the previous state and duration \cite{Gales93}. Efficient approximate inference procedures were developed in the context of speech recognition \cite{Ostendorf96} and evolved into symmetric approaches suitable for practical implementation \cite{Yu2006}.
+This approach, generalised under the name ``segmental hidden Markov models'', includes more general transitions than those Rabiner considered, allowing the next state and duration to be conditioned on the previous state and duration \cite{Gales93}. Efficient approximate inference procedures were developed in the context of speech recognition \cite{Ostendorf96}, speech synthesis \cite{Zen07}, and evolved into symmetric approaches suitable for practical implementation \cite{Yu2006}.
 
 Recently, a ``sticky'' variant of the hierarchical Dirichlet process HMM (HDP-HMM) has been developed \cite{Fox2008}.  The HDP-HMM has countable state-cardinality \cite{Teh06} allowing estimation of the number of states in the HMM; the sticky aspect addresses long dwell times by introducing a parameter in the prior that favours self-transition. 
 

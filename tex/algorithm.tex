@@ -31,7 +31,7 @@
 %\STATE set $\mathcal{U}$ to a small value for all $u_t \in \mathcal{U}$
 \FOR{sweep $ \in \{1,2,3,\ldots \}$}
    % \STATE \textbf{Forwards pass}:
-    \STATE \textbf{Forward}: run \eqref{eqn:scaled forward} to get $\hat{\alpha}_t$ given $\mathcal{U}$ and $\mathcal{Y} \; \forall\, T$
+    \STATE \textbf{Forward}: run \eqref{eqn:scaled forward} to get $\hat{\alpha}_t(z_t)$ given $\mathcal{U}$ and $\mathcal{Y} \; \forall\, T$
     %\STATE \textbf{Backwards sample}:
     \STATE \textbf{Backward}: sample $z_T \sim \hat{\alpha}_T$
     \FOR{$t \in \{T, T-1, \ldots, 1\}$}

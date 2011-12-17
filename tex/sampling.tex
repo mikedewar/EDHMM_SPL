@@ -5,7 +5,7 @@ Our aim is to estimate the conditional posterior distribution of the latent stat
 We can, in theory, use the forward messages from the forward backward algorithm \cite{Rabiner89} to sample the conditional posterior distribution of $\mathcal{X}$ and $\mathcal{D}.$   To do this we treat each state-duration tuple as a single random variable 
 %(i.e.~$z_t = \{x_t,d_t\}$).  
 (introducing the notation $z_t = \{x_t,d_t\}$).  
-Doing so recovers the standard hidden Markov model structure and hence standard forward messages can be used directly.  A forward filtering, backward sampler for $\mathcal{Z} = \{z_1, \ldots, x_T\}$ conditioned on 
+Doing so recovers the standard hidden Markov model structure and hence standard forward messages can be used directly.  A forward filtering, backward sampler for $\mathcal{Z} = \{z_1, \ldots, z_T\}$ conditioned on 
 %everything else 
 all other random variables
 requires the classical forward messages:
@@ -23,7 +23,7 @@ requires the classical forward messages:
     % \end{equation}
      where the transition probability can be factorised according to our modelling assumptions:
      \begin{equation}
-        p(z_{t} | z_{t-1}) = p(x_t | x_{t-1}, d_{t-1}) p(d_t | d_{t-1}, x_t) p(y_t|x_t).
+        p(z_{t} | z_{t-1}) = p(x_t | x_{t-1}, d_{t-1}) p(d_t | d_{t-1}, x_t).
      \end{equation}
 
 Unfortunately the sum in \eqref{eqn:forward recursion} has an infinite number of terms in the usual case of  duration distributions with countably infinite support. The standard approach to EDHMM inference involves truncating these sums in order to make them tractable. 
@@ -55,7 +55,7 @@ The particular choice of auxiliary variable $u_t$ is important.  We follow  \cit
     {\mathbb{I}(0 < u_t < p(z_t | z_{t-1}))} 
     {p(z_t | z_{t-1})}.
 \end{equation}
-Given $\mathcal{U}$ it possible to sample the state $\mathcal{X}$ and duration $\mathcal{D}$ conditional posterior. 
+where $\mathbb{I}(\cdot)$ returns one if its operand is true and zero otherwise. Given $\mathcal{U}$ it is possible to sample the state $\mathcal{X}$ and duration $\mathcal{D}$ conditional posterior. 
 %\begin{equation}
 %    \hat{\alpha}_t(z_t) = p(z_t, d_t , \mathcal{Y}_1^t, \mathcal{U}_1^t)
 %\end{equation}
@@ -75,7 +75,7 @@ Using notation $\mathcal{Y}_{t_1}^{t_2} = \{y_{t_1}, y_{t_1+1}, \ldots,y_{t_2}\}
    \mathbb{I}(0 < u_{t} < p(z_t | z_{t-1}))
    p(y_t|z_t) \hat{\alpha}_{t-1}(z_{t-1}) \nonumber.
 \end{eqnarray}
-The indicator function results in non-zero probabilities in the forward message for only those states $z_t$ whose likelihood given $z_{t-1}$ is greater than $u_t$. The beam sampler derives its computational advantage from the fact that the set of $z_t$'s for which this is true is typically small. 
+The indicator function $\mathbb{I}$ results in non-zero probabilities in the forward message for only those states $z_t$ whose likelihood given $z_{t-1}$ is greater than $u_t$. The beam sampler derives its computational advantage from the fact that the set of $z_t$'s for which this is true is typically small. 
 %Hence \eqref{eqn:indicator} can be rewritten as a limitation of the sum over possible state transitions:
 %\begin{equation}
 %    \hat{\alpha}_t(z_t) = 

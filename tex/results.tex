@@ -20,7 +20,7 @@ The first experiment uses the 500 data points (Figure \ref{fig:experiment1_data}
     \label{fig:experiment1_data}
 \end{figure}
 
-Broad, uninformative priors were chosen for the parameters of the duration and observation distributions. The the observation distribution parameters were given a normal-inverse-Wishart (N-IW) prior with parameters $\nu_0 = 2$, $\Lambda_0 = 1$, $\kappa=0.1$ and $\mu_0 = 0$. The rate parameters for all states were given $\mathrm{Gamma}(1, 10^{5})$ priors. 
+Broad, uninformative priors were chosen for the parameters of the duration and observation distributions. The observation distribution parameters were given a normal-inverse-Wishart (N-IW) prior with parameters $\nu_0 = 2$, $\Lambda_0 = 1$, $\kappa=0.1$ and $\mu_0 = 0$. The rate parameters for all states were given $\mathrm{Gamma}(1, 10^{5})$ priors. 
 
 One thousand samples were collected from the EDHMM beam sampler after a burn-in of 500 samples. The learned posterior distribution of the state duration parameters and means of the observation distributions are shown in Figure \ref{fig:experiment1_results}.  The EDHMM achieves high accuracy in the estimated posterior distribution of the observation means, despite the overlap in observation distributions. The rate parameter distributions are reasonably estimated given the small number of observed segments. Figure \ref{fig:allowed} shows the mean number of transitions visited per time point over each iteration of the sampler. 
 
