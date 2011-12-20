@@ -1,10 +1,10 @@
 \label{section}
 Hidden Markov models (HMMs) are a fundamental tool for data analysis and exploration.  Many variants of the basic HMM have been developed in response to shortcomings in the original HMM formulation \cite{Rabiner89}.  In this paper we address inference in the explicit state duration HMM (EDHMM).  By state duration we mean the amount of time an HMM dwells in a state.  In the standard HMM specification, a state's duration is implicit and, a priori, distributed geometrically.
 
-The explicit state duration HMM (EDHMM) \cite{Rabiner89}, a member of the Hidden Semi Markov Models \cite{Yu10}, was developed to 
+The EDHMM  (or, equivalently, the hidden semi-Markov model \cite{Yu10}) was developed to 
 allow explicit parameterization and direct inference of state duration 
 distributions.   EDHMM estimation and inference can be performed using the 
-forward-backward algorithm; specifically if the sequence is short or a tight 
+forward-backward algorithm; though only if the sequence is short or a tight 
 ``allowable'' duration interval for each state is hard-coded a priori 
 \cite{Yu2006}.   If the sequence is short then forward-backward can be run 
 on a state representation that allows for all possible durations up to the 
@@ -12,8 +12,8 @@ observed sequence length.  If the sequence is long then forward-backward
 only remains computationally tractable if only transitions between durations 
 that lie within pre-specified allowable intervals are considered.   If the 
 true state durations lie outside those intervals then the resulting model 
-estimates will be incorrect: the learned duration distributions will reflect 
-only what is allowed given the pre-specified duration intervals. % (which may poorly describe the true duration distributions).
+estimates will be incorrect: the learned duration distributions can only reflect 
+ what is allowed given the pre-specified duration intervals. % (which may poorly describe the true duration distributions).
 
 Our contribution is the development of a procedure for EDHMM inference that does not require any hard pre-specification of duration intervals, is efficient in practice, and, as it is an asymptotically exact procedure, does not risk incorrect inference.  The technique we use to do this 
 is borrowed from sampling procedures developed for nonparametric  Bayesian HMM variants \cite{vanGael2008}.  Our key insight is simple: the machinery developed for inference in HMMs with a countable number of states is precisely the same as that which is needed for doing inference in an EDHMM with duration distributions over countable support.  So, while the EDHMM is a distinctly parametric model, the tools from nonparametric Bayesian inference can be applied such that black-box inference becomes possible and, in practice, efficient.

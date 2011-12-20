@@ -40,7 +40,7 @@ One thousand samples were collected from the EDHMM beam sampler after a burn-in 
 \begin{figure}
     \includegraphics[width=0.5\textwidth]{../pic/number_transitions_visited.pdf}
 
-\caption{Mean number of transitions considered per time point by the beam sampler for 1000 post-burn-in iterations on data from Figure \ref{fig:experiment1_results}. Consider this in comparison to the $(KT)^2 = O(10^6)$ transitions that would need to be considered by standard forward backward without truncation, the only surely safe, truncation-free alternative.}
+\caption{Mean number of transitions considered per time point by the beam sampler for 1000 post-burn-in sweeps on data from Figure \ref{fig:experiment1_results}. Consider this in comparison to the $(KT)^2 = O(10^6)$ per time point transitions that would need to be considered by standard forward backward without truncation, a surely-safe, truncation-free, but computationally impractical alternative.}
 \label{fig:allowed}
 \end{figure}
 
