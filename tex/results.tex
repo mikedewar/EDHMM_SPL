@@ -38,20 +38,17 @@ One thousand samples were collected from the EDHMM beam sampler after a burn-in 
 \end{figure}
 
 \begin{figure}
-    \includegraphics[width=0.5\textwidth]{../pic/number_transitions_visited.pdf}
+    \includegraphics[width=0.45\textwidth]{../pic/number_transitions_visited.pdf}
 
 \caption{Mean number of transitions considered per time point by the beam sampler for 1000 post-burn-in sweeps on data from Figure \ref{fig:experiment1_results}. Consider this in comparison to the $(KT)^2 = O(10^6)$ per time point transitions that would need to be considered by standard forward backward without truncation, a surely-safe, truncation-free, but computationally impractical alternative.}
 \label{fig:allowed}
 \end{figure}
 
 A second experiment was performed to demonstrate the ability of the EDHMM to distinguish between states having differing duration distributions but the same observation distribution. The same model and sampling procedure was used as above except here $\mu_1 = 0$, $\mu_2 = 0$, and $\mu_3 = 3$.
-
 Figure~\ref{fig:experiment2_results} shows that the sampler clearly separates the high state associated with $\mu_3$ from the other states and clearly 
 %identifies the fact that there are 
 reveals the presence of
-two  low states with differing duration distributions.   
-%That it is possible for the EDHMM to recover two states with differing duration distributions requires a third state.  
-Figure~\ref{fig:exp_2_state} shows posterior samples that indicate that the model is mixing over ambiguities about states $0$ and $1$ as it should. %As shown in Figure \ref{fig:experiment2_results}, when the state transitions to and from the long-high state to the short-low state (e.g. $t\approx 100$ and $t\approx 180$) the transitions are captured well. When the system transitions between the two low states the segmentation is less accurate, due to the inherent lack of identifiability during these periods. Instead, the space of valid state sequences is explored, each sequence obeying the duration distribution.
+two  low states with differing duration distributions. Figure~\ref{fig:exp_2_state} shows posterior samples that indicate that the model is mixing over ambiguities about states $0$ and $1$ as it should. %As shown in Figure \ref{fig:experiment2_results}, when the state transitions to and from the long-high state to the short-low state (e.g. $t\approx 100$ and $t\approx 180$) the transitions are captured well. When the system transitions between the two low states the segmentation is less accurate, due to the inherent lack of identifiability during these periods. Instead, the space of valid state sequences is explored, each sequence obeying the duration distribution.
 
 %Despite the loss of identifiability in the state sequence, the sampler is still able to capture reasonable estimates for the parameters of the observation and duration distributions.
 
@@ -72,6 +69,6 @@ Figure~\ref{fig:exp_2_state} shows posterior samples that indicate that the mode
         \includegraphics[width=0.25\textwidth]{../pic/posterior_rates_exp3.pdf}
         \label{fig:posterior_rates_3}
     }
-    \caption{Beam sampler results applied to a system with identical observation distributions but differing durations. Observations are shown in a); true states are shown in b) overlaid with 20 randomly selected state traces produced by the sampler. Here the observation distributions have means $\mu_1 = 0$, $\mu_2 = 0$, and $\mu_3 = 3$ and the duration distributions have rates $\lambda_1 = 5$, $\lambda_2 = 15$, $\lambda_3 = 20$. Samples from the posterior observation distribution mean are shown in c), and samples from the posterior duration distribution rates are shown in d).}
+    \caption{Beam sampler results from a system with identical observation distributions but differing durations. Observations are shown in a); true states in b) overlaid with 20 state traces produced by the sampler. Here we have parameters $\mu_1 = \mu_2 = 0$, $\mu_3 = 3$ and $\lambda_1 = 5$, $\lambda_2 = 15$, $\lambda_3 = 20$. Samples from the posterior observation-mean and duration-rate distributions are shown in c) and d), respectively.}
     \label{fig:experiment2_results}
 \end{figure}

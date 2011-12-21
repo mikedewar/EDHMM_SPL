@@ -14,7 +14,7 @@ W = W.reshape((len(W)/500,500))
 
 burnin=500
 
-pb.figure(figsize=(6,2))
+pb.figure(figsize=(6.5,2))
 pb.plot(pb.mean(W,1)[burnin:burnin+1000], 'k-', lw=1)
 pb.xlabel('iteration',{"family":"Times New Roman", "color":"black"})
 pb.ylabel('number of transitions visited',{"family":"Times New Roman", "color":"black"})

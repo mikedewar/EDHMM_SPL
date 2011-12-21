@@ -61,10 +61,11 @@ where $\mathbb{I}(\cdot)$ returns one if its operand is true and zero otherwise.
 Using notation $\mathcal{Y}_{t_1}^{t_2} = \{y_{t_1}, y_{t_1+1}, \ldots,y_{t_2}\}$  to indicate sub-ranges of a sequence, the new forward messages we compute are:
 \begin{eqnarray}
    \hat{\alpha}_t(z_t) &=& 
-   p(z_t, \mathcal{Y}_1^t , \mathcal{U}_1^{t})   \label{eqn:scaled forward} \\
-   &=& 
+   p(z_t, \mathcal{Y}_1^t , \mathcal{U}_1^{t})   \label{eqn:scaled forward} %\\
+   %&=& 
+   =
    \sum_{z_{t-1}}
-   p(z_t, z_{t-1} , \mathcal{Y}_1^t , \mathcal{U}_1^{t}) \nonumber \\
+   p(z_t, z_{t-1} , \mathcal{Y}_1^t , \mathcal{U}_1^{t}) \\ % \nonumber \\
    &\propto& 
    \sum_{z_{t-1}}
    p(u_{t} | z_t, z_{t-1})
