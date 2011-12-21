@@ -33,13 +33,13 @@
    % \STATE \textbf{Forwards pass}:
     \STATE \textbf{Forward}: run \eqref{eqn:scaled forward} to get $\hat{\alpha}_t(z_t)$ given $\mathcal{U}$ and $\mathcal{Y} \; \forall\, T$
     %\STATE \textbf{Backwards sample}:
-    \STATE \textbf{Backward}: sample $z_T \sim \hat{\alpha}_T$
+    \STATE \textbf{Backward}: sample $z_T \sim \hat{\alpha}_T(z_T)$
     \FOR{$t \in \{T, T-1, \ldots, 1\}$}
-        \STATE sample $z_{t-1} \sim \mathbb{I}(u_{t+1} < p(z_{t} | z_{t-1}))\hat{\alpha}_{t-1}$
+        \STATE sample $z_{t-1} \sim \mathbb{I}(u_t < p(z_{t} | z_{t-1}))\hat{\alpha}_{t-1}(z_{t-1})$
     \ENDFOR
 \STATE \textbf{Slice:}\FOR {$t \in \{1, 2, \ldots, T \}$}
     \STATE evaluate $l = p(d_t|x_t,d_{t-1})p(x_t|x_{t-1},d_{t-1})$
-    \STATE sample $u_{t+1} \sim \mathrm{Uniform}(0,l)$
+    \STATE sample $u_{t} \sim \mathrm{Uniform}(0,l)$
     \ENDFOR
 \STATE sample parameters $A$, $\lambda$, $\theta$
 \ENDFOR
