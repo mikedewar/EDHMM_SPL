@@ -1,0 +1,83 @@
+\begin{thebibliography}{10}
+
+\bibitem{Beal2002}
+Matthew~J Beal, Z~Ghahramani, and C~E Rasmussen.
+\newblock {The Infinite Hidden Markov Model}.
+\newblock {\em Advances in Neural Information Processing Systems}, 1:577--584,
+  2002.
+
+\bibitem{Bishop06}
+C~M Bishop.
+\newblock {\em {Pattern Recognition and Machine Learning}}.
+\newblock Springer, 2006.
+
+\bibitem{Chiappa2011}
+Silvia Chiappa.
+\newblock {Unified Treatment of Hidden Markov Switching Models}, April 2011.
+
+\bibitem{Fox2008}
+Emily~B Fox, Erik~B Sudderth, Michael~I Jordan, and Alan~S Willsky.
+\newblock {An HDP-HMM for systems with state persistence}.
+\newblock {\em Proceedings of the 25th International Conference on Machine
+  Learning (2008)}, 25:312--319, 2008.
+
+\bibitem{Gales93}
+M~J~F Gales and S~J Young.
+\newblock {The Theory of Segmental Hidden Markov Models}.
+\newblock Technical report, Cambride University Engineering Department, 1993.
+
+\bibitem{Goldwater2009}
+S.~Goldwater, T.L. Griffiths, and M.~Johnson.
+\newblock {A Bayesian framework for word segmentation: Exploring the effects of
+  context}.
+\newblock {\em Cognition}, 112(1):21--54, 2009.
+
+\bibitem{Neal2003}
+Radford~M Neal.
+\newblock {Slice sampling}.
+\newblock {\em Annals of Statistics}, 31(3):705--767, 2003.
+
+\bibitem{Ostendorf96}
+M~Ostendorf, V~V Digalakis, and O~A Kimball.
+\newblock From {HMM}s to segment models: a unified view of stochastic modeling
+  for speech recognition.
+\newblock {\em IEEE Transactions on Speech and Audio Processing}, 4(5):360 --
+  378, 1996.
+
+\bibitem{Rabiner89}
+L~R Rabiner.
+\newblock {A Tutorial on Hidden Markov Models and Selected Applications in
+  Speech Recognition}.
+\newblock {\em Proceedings of the IEEE}, 77(2):257--286, 1989.
+
+\bibitem{Teh06}
+Y~W Teh, M~I Jordan, M~J Beal, and D~M Blei.
+\newblock {Hierarchical Dirichlet Processes}.
+\newblock {\em Journal of the American Statistical Association},
+  101(476):1566--1581, 2006.
+
+\bibitem{vanGael2008}
+Jurgen {Van Gael}, Yunus Saatci, Yee~Whye Teh, and Zoubin Ghahramani.
+\newblock {Beam sampling for the infinite hidden Markov model}.
+\newblock {\em Proceedings of the 25th International Conference on Machine
+  Learning (2008)}, 25:1088--1095, 2008.
+
+\bibitem{Yu10}
+S.~Yu.
+\newblock Hidden semi-{M}arkov models.
+\newblock {\em Artificial Intelligence}, 174:215--243, 2010.
+
+\bibitem{Yu2006}
+Hisahi {Yu, Shun-Zeng, Kobayashi}.
+\newblock {Practical implementation of an efficient forward-backward algorithm
+  for an explicit-duration hidden Markov model}.
+\newblock {\em IEEE Transactions on Signal Processing}, 54(5):1947--1951, 2006.
+
+\bibitem{Zen07}
+Heiga Zen, Keiichi Tokuda, Takashi Masuko, Takao Kobayasih, and Tadashi
+  Kitamura.
+\newblock A hidden semi-{M}arkov model-based speech synthesis system.
+\newblock {\em IEICE Transactions on Information and Systems},
+  E90-D(5):825--834, 2007.
+
+\end{thebibliography}

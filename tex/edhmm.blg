@@ -1,0 +1,69 @@
+This is BibTeX, Version 0.99d (TeX Live 2011)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: edhmm.aux
+The style file: plain.bst
+Database file #1: ../inc/library.bib
+Warning--entry type for "Chiappa2011" isn't style-file defined
+--line 2572 of file ../inc/library.bib
+Repeated entry---line 5555 of file ../inc/library.bib
+ : @article{Yu2006
+ :                ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 5585 of file ../inc/library.bib
+ : @article{Neal2003
+ :                  ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 5626 of file ../inc/library.bib
+ : @article{Chiappa2011
+ :                     ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 5640 of file ../inc/library.bib
+ : @article{VanGael2008
+ :                     ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 5656 of file ../inc/library.bib
+ : @article{Beal2002
+ :                  ,
+I'm skipping whatever remains of this entry
+You've used 14 entries,
+            2118 wiz_defined-function locations,
+            603 strings with 6278 characters,
+and the built_in function-call counts, 4585 in all, are:
+= -- 460
+> -- 206
+< -- 0
++ -- 83
+- -- 68
+* -- 347
+:= -- 785
+add.period$ -- 41
+call.type$ -- 14
+change.case$ -- 76
+chr.to.int$ -- 0
+cite$ -- 14
+duplicate$ -- 148
+empty$ -- 359
+format.name$ -- 68
+if$ -- 924
+int.to.chr$ -- 0
+int.to.str$ -- 14
+missing$ -- 13
+newline$ -- 72
+num.names$ -- 28
+pop$ -- 62
+preamble$ -- 1
+purify$ -- 62
+quote$ -- 0
+skip$ -- 96
+stack$ -- 0
+substring$ -- 360
+swap$ -- 13
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 54
+warning$ -- 0
+while$ -- 49
+width$ -- 16
+write$ -- 152
+(There were 5 error messages)
