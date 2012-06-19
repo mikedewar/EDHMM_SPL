@@ -22,6 +22,6 @@ The joint distribution of the EDHMM is
 \begin{multline}
     \label{eq:joint}
     p(\mathcal{X},\mathcal{D},\mathcal{Y}) =  
-    p(x_0)p(d_0) \\ \prod_{t=1}^T p(y_t | x_t, \theta) p(x_t | x_{t-1}, d_{t-1}, A) p(d_t | x_{t}, d_{t-1}, \lambda)
+    p(x_0)p(d_0) \times \\ \prod_{t=1}^T p(y_t | x_t, \theta) p(x_t | x_{t-1}, d_{t-1}, A) p(d_t | x_{t}, d_{t-1}, \lambda)
 \end{multline}
 corresponding to the graphical model in Figure \ref{fig:graphical model}. Alternative choices to define the duration variable $d_t$ exist; see \cite{Chiappa2011} for details. Algorithm \ref{alg:gen} illustrates the EDHMM as a generative model.
